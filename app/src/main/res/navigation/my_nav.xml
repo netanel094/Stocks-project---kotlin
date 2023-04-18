@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/addItemFragment"
-        android:name="com.example.buildingblocks.ui.AddItemFragment"
+        android:name="com.example.buildingblocks.ui.add_character.AddItemFragment"
         android:label="add_item"
         tools:layout="@layout/add_item">
         <action

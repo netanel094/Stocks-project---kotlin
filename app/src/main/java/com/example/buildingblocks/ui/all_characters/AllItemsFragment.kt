@@ -7,32 +7,44 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.buildingblocks.Item
-import com.example.buildingblocks.ItemMenager
 import com.example.buildingblocks.R
 import com.example.buildingblocks.databinding.AllItemsBinding
+import com.example.buildingblocks.ui.ItemsViewModel
 
 class AllItemsFragment :Fragment() {
 
     private var _binding: AllItemsBinding? = null
     private val binding get() = _binding!!
 
+
+    private val viewModel : ItemsViewModel by activityViewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recycler.adapter = ItemAdapter(ItemMenager.items, object : ItemAdapter.ItemListener {
-            override fun onItemClicked(index: Int) {
-                val bundle = bundleOf("item" to index)
-                findNavController().navigate(R.id.action_allItemsFragment_to_stockDetails, bundle)
-            }
 
-            override fun onItemLongClicked(index: Int) {}
-        })
-        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
+        viewModel.items?.observe(viewLifecycleOwner)
+        {
+
+            binding.recycler.adapter = ItemAdapter(it, object : ItemAdapter.ItemListener {
+                override fun onItemClicked(index: Int) {
+                    val bundle = bundleOf("item" to index)
+                    findNavController().navigate(R.id.action_allItemsFragment_to_stockDetails, bundle)
+                }
+
+                override fun onItemLongClicked(index: Int) {}
+            })
+            binding.recycler.layoutManager = LinearLayoutManager(requireContext())
+
+        }
+
+
 
 
         ItemTouchHelper(object : ItemTouchHelper.Callback() {
@@ -56,8 +68,8 @@ class AllItemsFragment :Fragment() {
                     .setTitle("Delete Item")
                     .setMessage("Are you sure you want to delete this item?")
                     .setPositiveButton("Delete") { _, _ ->
-                        ItemMenager.remove(viewHolder.adapterPosition)
-                        binding.recycler.adapter!!.notifyItemRemoved(viewHolder.adapterPosition)
+                        //ItemMenager.remove(viewHolder.adapterPosition)
+                        // binding.recycler.adapter!!.notifyItemRemoved(viewHolder.adapterPosition)
                     }
                     .setNegativeButton("Cancel") { dialog, _ ->
                         dialog.dismiss()
@@ -86,15 +98,15 @@ class AllItemsFragment :Fragment() {
             Uri.parse("android.resource://com.example.buildingblocks/drawable/netflix"),
             Uri.parse("android.resource://com.example.buildingblocks/drawable/tex"),
         )
-        if (ItemMenager.items.isEmpty()) {
+        if (viewModel.items?.value?.isNotEmpty() == true) {
             for (i in symbols.indices) {
                 val item = Item (
                     symbols[i],
                     companyName[i],
                     prices[i],
-                    logos[i]
+                    logos[i],
                 )
-                ItemMenager.add(item)
+                viewModel.addItem(item)
             }
         }
     }

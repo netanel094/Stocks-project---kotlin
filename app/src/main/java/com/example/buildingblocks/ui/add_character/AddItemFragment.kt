@@ -1,4 +1,4 @@
-package com.example.buildingblocks.ui
+package com.example.buildingblocks.ui.add_character
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,16 +9,22 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.buildingblocks.Item
-import com.example.buildingblocks.ItemMenager
 import com.example.buildingblocks.R
 import com.example.buildingblocks.databinding.AddItemBinding
+import com.example.buildingblocks.ui.ItemsViewModel
 
 
 class AddItemFragment : Fragment() {
     private var _binding :AddItemBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel : ItemsViewModel by activityViewModels()
+
+
+
     private var imageUri : Uri? = null
     val pickImageLauncher : ActivityResultLauncher<Array<String>> =
         registerForActivityResult(ActivityResultContracts.OpenDocument()){
@@ -79,7 +85,9 @@ class AddItemFragment : Fragment() {
                 binding.stockPrice.text.toString(),
                 imageUri
             )
-            ItemMenager.add(item)
+
+            viewModel.addItem(item)
+
             findNavController().navigate(R.id.action_addItemFragment_to_allItemsFragment)
         }
 

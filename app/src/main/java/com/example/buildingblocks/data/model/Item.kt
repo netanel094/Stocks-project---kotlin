@@ -4,11 +4,15 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
 @Entity(tableName = "stocks")
 data class Item(
+
+    @PrimaryKey
     @ColumnInfo(name = "symbol")
     val title:String,
     @ColumnInfo(name = "description")
@@ -18,18 +22,7 @@ data class Item(
     @ColumnInfo(name = "photo")
     val photo: Uri?): Parcelable {
 
-        @PrimaryKey(autoGenerate = true)
-        var id : Int = 0
+        // @PrimaryKey(autoGenerate = true)
+        // var id : Int = 0
     }
 
-
-//object ItemMenager {
-//    val items:MutableList<Item> = mutableListOf()
-//
-//    fun add(item:Item) {
-//        items.add(item)
-//    }
-//
-//    fun remove(index:Int) {
-//        items.removeAt(index)
-//    }
