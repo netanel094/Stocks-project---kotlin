@@ -34,7 +34,7 @@ class AllItemsFragment :Fragment() {
 
             binding.recycler.adapter = ItemAdapter(it, object : ItemAdapter.ItemListener {
                 override fun onItemClicked(index: Int) {
-                    val bundle = bundleOf("item" to index)
+                    val bundle = bundleOf("item" to it[index])
                     findNavController().navigate(R.id.action_allItemsFragment_to_stockDetails, bundle)
                 }
 
@@ -64,16 +64,17 @@ class AllItemsFragment :Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val context = binding.root.context
+                val position = viewHolder.adapterPosition
+                val item = (binding.recycler.adapter as ItemAdapter).items[position]
                 AlertDialog.Builder(context)
                     .setTitle("Delete Item")
                     .setMessage("Are you sure you want to delete this item?")
                     .setPositiveButton("Delete") { _, _ ->
-                        //ItemMenager.remove(viewHolder.adapterPosition)
-                        // binding.recycler.adapter!!.notifyItemRemoved(viewHolder.adapterPosition)
+                        viewModel.deleteItem(item)
                     }
                     .setNegativeButton("Cancel") { dialog, _ ->
                         dialog.dismiss()
-                        binding.recycler.adapter!!.notifyItemChanged(viewHolder.adapterPosition)
+                        binding.recycler.adapter!!.notifyItemChanged(position)
                     }
                     .show()
             }
@@ -98,7 +99,7 @@ class AllItemsFragment :Fragment() {
             Uri.parse("android.resource://com.example.buildingblocks/drawable/netflix"),
             Uri.parse("android.resource://com.example.buildingblocks/drawable/tex"),
         )
-        if (viewModel.items?.value?.isNotEmpty() == true) {
+        if (viewModel.items?.value?.isEmpty() != false) {
             for (i in symbols.indices) {
                 val item = Item (
                     symbols[i],

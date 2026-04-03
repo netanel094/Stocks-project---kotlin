@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.buildingblocks.ItemMenager
+import com.example.buildingblocks.Item
 import com.example.buildingblocks.databinding.StockDetailsBinding
 
 
@@ -26,11 +26,11 @@ class StockDetails : Fragment()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.getInt("item")?.let {
-            val item = ItemMenager.items[it]
-
-            binding.itemTitle.text = item.title
-            binding.itemDesc.text = item.description
+        @Suppress("DEPRECATION")
+        val item = arguments?.getParcelable<Item>("item")
+        item?.let {
+            binding.itemTitle.text = it.title
+            binding.itemDesc.text = it.description
         }
     }
 

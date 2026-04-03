@@ -49,11 +49,6 @@ class AddItemFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            if(binding.itemTitle.text.toString().matches(".*\\d.*".toRegex())) {
-                Toast.makeText(requireContext(), "The symbol must not contain numbers", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
             if(binding.itemTitle.text.toString().length > 5) {
                 Toast.makeText(requireContext(), "The symbol is more than 5 characters", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener

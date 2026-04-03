@@ -21,5 +21,5 @@ interface ItemDao {
     fun getItems():LiveData<List<Item>>
 
     @Query("SELECT * FROM stocks where symbol LIKE :symbol")
-    fun getItem(symbol:String):Item
+    fun getItem(symbol:String):Item?
 }
