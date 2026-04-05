@@ -24,6 +24,11 @@ class AllItemsFragment :Fragment() {
 
     private val viewModel : ItemsViewModel by activityViewModels()
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshPrices()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
