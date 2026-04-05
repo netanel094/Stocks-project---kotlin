@@ -22,15 +22,14 @@ class AllItemsFragment :Fragment() {
     private var _binding: AllItemsBinding? = null
     private val binding get() = _binding!!
 
-
     private val viewModel : ItemsViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         viewModel.items?.observe(viewLifecycleOwner)
         {
+            binding.emptyState.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
 
             binding.recycler.adapter = ItemAdapter(it, object : ItemAdapter.ItemListener {
                 override fun onItemClicked(index: Int) {
@@ -41,34 +40,28 @@ class AllItemsFragment :Fragment() {
                 override fun onItemLongClicked(index: Int) {}
             })
             binding.recycler.layoutManager = LinearLayoutManager(requireContext())
-
         }
-
-
-
 
         ItemTouchHelper(object : ItemTouchHelper.Callback() {
 
             override fun getMovementFlags(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder
-            ) = makeFlag(ItemTouchHelper.ACTION_STATE_SWIPE,ItemTouchHelper.RIGHT)
+            ) = makeFlag(ItemTouchHelper.ACTION_STATE_SWIPE, ItemTouchHelper.RIGHT)
 
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
-            ): Boolean {
-                TODO("Not yet implemented")
-            }
+            ) = false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val context = binding.root.context
                 val position = viewHolder.adapterPosition
                 val item = (binding.recycler.adapter as ItemAdapter).items[position]
                 AlertDialog.Builder(context)
-                    .setTitle("Delete Item")
-                    .setMessage("Are you sure you want to delete this item?")
+                    .setTitle("Delete Stock")
+                    .setMessage("Are you sure you want to remove ${item.title}?")
                     .setPositiveButton("Delete") { _, _ ->
                         viewModel.deleteItem(item)
                     }
@@ -83,11 +76,11 @@ class AllItemsFragment :Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val symbols = mutableListOf<String>("AAPL", "NVDA", "AMZN", "TSLA", "MBLY", "GOOGL",
-        "META", "CVX", "NFLX", "TEX")
-        val companyName = mutableListOf<String>("Apple", "Nvidia", "Amazon", "Tesla", "Mobilye", "Google", "Meta", "Chevron", "Netflix", "Terex")
-        val prices = mutableListOf<String>("23.54$", "56.90$", "112.222$", "12.34$", "90.89$", "12.56$", "340.23$", "5.98$", "45.83$", "28.54$")
-        val logos = mutableListOf<Uri>(
+        val symbols = mutableListOf("AAPL", "NVDA", "AMZN", "TSLA", "MBLY", "GOOGL",
+            "META", "CVX", "NFLX", "TEX")
+        val companyName = mutableListOf("Apple", "Nvidia", "Amazon", "Tesla", "Mobilye", "Google", "Meta", "Chevron", "Netflix", "Terex")
+        val prices = mutableListOf("$23.54", "$56.90", "$112.22", "$12.34", "$90.89", "$12.56", "$340.23", "$5.98", "$45.83", "$28.54")
+        val logos = mutableListOf(
             Uri.parse("android.resource://com.example.buildingblocks/drawable/apple"),
             Uri.parse("android.resource://com.example.buildingblocks/drawable/nvidia"),
             Uri.parse("android.resource://com.example.buildingblocks/drawable/amazon"),
@@ -101,18 +94,13 @@ class AllItemsFragment :Fragment() {
         )
         if (viewModel.items?.value?.isEmpty() != false) {
             for (i in symbols.indices) {
-                val item = Item (
-                    symbols[i],
-                    companyName[i],
-                    prices[i],
-                    logos[i],
-                )
+                val item = Item(symbols[i], companyName[i], prices[i], logos[i])
                 viewModel.addItem(item)
             }
         }
     }
 
-    override fun onCreateView (
+    override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?

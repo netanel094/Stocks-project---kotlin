@@ -69,15 +69,21 @@ class AddItemFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            val priceText = binding.stockPrice.text.toString()
+            if (priceText.isBlank() || priceText.toDoubleOrNull() == null) {
+                Toast.makeText(requireContext(), "Please enter a valid price", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             if(imageUri == null) {
                 Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             val item = Item(
-                binding.itemTitle.text.toString(),
+                binding.itemTitle.text.toString().uppercase(),
                 binding.compName.text.toString(),
-                binding.stockPrice.text.toString(),
+                "$$priceText",
                 imageUri
             )
 
@@ -94,10 +100,6 @@ class AddItemFragment : Fragment() {
         return binding.root
     }
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

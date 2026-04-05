@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.buildingblocks.Item
 import com.example.buildingblocks.databinding.StockDetailsBinding
 
@@ -31,6 +32,8 @@ class StockDetails : Fragment()
         item?.let {
             binding.itemTitle.text = it.title
             binding.itemDesc.text = it.description
+            binding.itemPrice.text = it.price
+            Glide.with(this).load(it.photo).circleCrop().into(binding.stockImage)
         }
     }
 

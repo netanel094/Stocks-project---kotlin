@@ -1,91 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.add_character.AddItemFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/surface_variant"
+    tools:context=".ui.add_character.AddItemFragment">
 
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox.Dense">
+        android:orientation="vertical"
+        android:padding="20dp">
 
-
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="* Enter stock symbol"
-            android:id="@+id/itemTitle"
-            android:maxLines="1"
-            android:maxLength="5"
-            android:inputType="text"
-            />
+            android:text="Add New Stock"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="@color/purple_500"
+            android:layout_marginBottom="20dp"/>
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox.Dense">
-
-
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="* Enter company name"
-            android:maxLength="12"
-            android:maxLines="1"
-            android:inputType="text"
-            android:id="@+id/compName"
-            />
+            android:hint="Stock Symbol (e.g. AAPL)"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/itemTitle"
+                android:maxLines="1"
+                android:maxLength="5"
+                android:inputType="textCapCharacters"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox.Dense">
+        </com.google.android.material.textfield.TextInputLayout>
 
-
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="* Enter stock price"
-            android:id="@+id/stockPrice"
-            android:inputType="number"
-            />
+            android:layout_marginTop="12dp"
+            android:hint="Company Name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="30"
+                android:maxLines="1"
+                android:inputType="textCapWords"
+                android:id="@+id/compName"/>
 
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="Pick logo"
-        android:id="@+id/image_button"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Stock Price ($)"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:id="@+id/stockLogo" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/stockPrice"
+                android:inputType="numberDecimal"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Confirm"
-        android:id="@+id/finish_btn"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Pick Company Logo"
+            android:id="@+id/image_button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:id="@+id/stockLogo"/>
 
-</LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Stock"
+            android:id="@+id/finish_btn"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+</ScrollView>

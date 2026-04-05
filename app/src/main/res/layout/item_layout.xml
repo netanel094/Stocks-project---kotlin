@@ -4,53 +4,57 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardUseCompatPadding="true"
-    app:contentPadding="10dp"
-    app:cardCornerRadius="10dp">
+    app:contentPadding="12dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@mipmap/ic_launcher"
             android:id="@+id/item_image"/>
 
         <LinearLayout
-            android:layout_width="180dp"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_marginStart="20dp"
-            android:layout_gravity="center">
+            android:layout_marginStart="16dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Main item title"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:id="@+id/item_title"
-                />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:text="Symbol"
                 android:textSize="18sp"
-                android:text="Item detailed description"
-                android:id="@+id/item_description"
-                android:layout_marginTop="12dp"/>
-        </LinearLayout>
+                android:textStyle="bold"
+                android:id="@+id/item_title"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="Company name"
+                android:id="@+id/item_description"
+                android:layout_marginTop="4dp"
+                android:textColor="#757575"/>
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:id="@+id/StockPrice"
             android:layout_height="wrap_content"
-            android:text="Price"
-            android:gravity="right"
-            android:layout_gravity="center" />
+            android:text="$0.00"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/green_500"
+            android:layout_marginEnd="4dp"/>
 
     </LinearLayout>
 
