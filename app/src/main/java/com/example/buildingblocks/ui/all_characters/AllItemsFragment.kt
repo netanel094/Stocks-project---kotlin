@@ -24,17 +24,19 @@ class AllItemsFragment :Fragment() {
 
     private val viewModel : ItemsViewModel by activityViewModels()
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.refreshPrices()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        var pricesRefreshed = false
 
         viewModel.items?.observe(viewLifecycleOwner)
         {
             binding.emptyState.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+
+            if (!pricesRefreshed && it.isNotEmpty()) {
+                pricesRefreshed = true
+                viewModel.refreshPrices()
+            }
 
             binding.recycler.adapter = ItemAdapter(it, object : ItemAdapter.ItemListener {
                 override fun onItemClicked(index: Int) {
